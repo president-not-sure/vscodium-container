@@ -17,6 +17,5 @@ EOF
 RUN dnf -y update && \
     dnf -y install \
         codium \
-# Add your own packages here
         git && \
     dnf -y clean all
