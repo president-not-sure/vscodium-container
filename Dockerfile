@@ -1,7 +1,5 @@
 FROM quay.io/fedora/fedora:latest
 
-ENV VSCODE_EXTENSIONS_GALLERY="https://marketplace.visualstudio.com/_apis/public/gallery"
-
 # Allow man pages installation and add VSCodium repo
 RUN sed -i '/tsflags=nodocs/d' /etc/dnf/dnf.conf && \
     cat <<'EOF' | tee /etc/yum.repos.d/vscodium.repo
