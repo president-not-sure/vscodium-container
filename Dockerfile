@@ -22,6 +22,3 @@ RUN dnf -y update && \
 # Add your own packages here
         git && \
     dnf -y clean all
-
-# Install default extensions
-# RUN codium --install-extension ms-python.python
