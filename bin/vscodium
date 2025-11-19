@@ -16,6 +16,8 @@ podman run \
     --env WAYLAND_DISPLAY=${WAYLAND_DISPLAY:-wayland-0} \
     --env DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$UID/bus \
     --env XDG_RUNTIME_DIR=/run/user/$UID \
+    --env XDG_SESSION_TYPE=wayland \
+    --env ELECTRON_OZONE_PLATFORM_HINT=wayland \
     --env CONTAINER_HOST=unix:///run/user/$UID/podman/podman.sock \
     --volume /run/user/$UID:/run/user/$UID \
     --volume /run/dbus/system_bus_socket:/run/dbus/system_bus_socket \
