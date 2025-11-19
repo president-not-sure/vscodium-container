@@ -9,9 +9,7 @@ podman run \
     --userns keep-id \
     --group-add keep-groups \
     --security-opt label=disable \
-    --network host \
     --shm-size 0 \
-    --device /dev/dri:/dev/dri \
     --env HOME=$HOME \
     --env WAYLAND_DISPLAY=${WAYLAND_DISPLAY:-wayland-0} \
     --env DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$UID/bus \
