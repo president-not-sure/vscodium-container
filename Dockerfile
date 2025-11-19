@@ -15,7 +15,17 @@ EOF
 
 # Install VSCodium and other dependencies
 RUN dnf -y update && \
+# Reinstall all packages to recover missing man pages
+    dnf -y reinstall $(dnf repoquery --installed --qf " %{name} ") && \
+    dnf -y group install \
+        container-management && \
     dnf -y install \
         codium \
-        git && \
-    dnf -y clean all
+        git git-lfs \
+        bash-completion bash-color-prompt \
+        man man-pages man-db \
+        glibc-locale-source && \
+    dnf -y clean all && \
+    rm -rf /var/cache/dnf && \
+    localedef -i en_US -f UTF-8 en_US.UTF-8
+
