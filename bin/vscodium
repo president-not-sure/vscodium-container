@@ -18,4 +18,4 @@ podman run \
     --volume /run/dbus/system_bus_socket:/run/dbus/system_bus_socket \
     --volume $HOME:$HOME \
     localhost/vscodium:${TAG:-latest} \
-    /usr/bin/codium --verbose --ozone-platform=wayland "$@"
+    "$@"

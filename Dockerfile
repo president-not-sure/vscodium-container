@@ -31,3 +31,7 @@ RUN dnf -y update && \
     rm -rf /var/cache/dnf && \
     localedef -i en_US -f UTF-8 en_US.UTF-8
 
+COPY entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
