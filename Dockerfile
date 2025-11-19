@@ -33,6 +33,8 @@ RUN dnf -y update && \
 
 # Enable password-less sudo
 RUN echo 'ALL ALL=(ALL) NOPASSWD: ALL' >/etc/sudoers.d/99_no_password && \
+# Ensure container env is kept under sudo
+    echo 'Defaults env_keep += "container"' >/etc/sudoers.d/99_env && \
     chmod 440 /etc/sudoers.d/*
 
 COPY entrypoint.sh /usr/local/bin/
