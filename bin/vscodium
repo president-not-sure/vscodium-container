@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# Import user environment
-eval "$(systemctl --user show-environment | sed 's/^/export /')"
-
-# shellcheck disable=SC2046
 podman run \
     --rm \
     --interactive \
