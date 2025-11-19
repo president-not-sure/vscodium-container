@@ -31,6 +31,10 @@ RUN dnf -y update && \
     rm -rf /var/cache/dnf && \
     localedef -i en_US -f UTF-8 en_US.UTF-8
 
+# Enable password-less sudo
+RUN echo 'ALL ALL=(ALL) NOPASSWD: ALL' >/etc/sudoers.d/99_no_password && \
+    chmod 440 /etc/sudoers.d/*
+
 COPY entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
