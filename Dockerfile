@@ -24,6 +24,8 @@ RUN dnf -y update && \
     dnf -y install \
         codium \
         git git-lfs \
+# Enable host command execution
+        host-spawn \
         bash-completion bash-color-prompt \
         man man-pages man-db \
         glibc-locale-source && \
