@@ -26,6 +26,7 @@ RUN dnf -y update && \
         git git-lfs \
 # Enable host command execution
         host-spawn \
+# CLI QoL
         bash-completion bash-color-prompt \
         man man-pages man-db \
         glibc-locale-source && \
