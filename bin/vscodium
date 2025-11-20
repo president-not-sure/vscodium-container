@@ -19,6 +19,7 @@ podman run \
     --env XDG_SESSION_TYPE=wayland \
     --env ELECTRON_OZONE_PLATFORM_HINT=wayland \
     --env CONTAINER_HOST=unix:///run/user/$UID/podman/podman.sock \
+    --device /dev/dri \
     --volume /run/user/$UID:/run/user/$UID \
     --volume /run/dbus/system_bus_socket:/run/dbus/system_bus_socket \
     --volume $HOME:$HOME \
