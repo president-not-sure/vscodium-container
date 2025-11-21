@@ -1,0 +1,2 @@
+# Environment variables to keep
+Defaults env_keep += "container"

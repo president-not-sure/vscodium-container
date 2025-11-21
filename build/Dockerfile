@@ -34,13 +34,9 @@ RUN dnf -y update && \
     rm -rf /var/cache/dnf && \
     localedef -i en_US -f UTF-8 en_US.UTF-8
 
-# Enable password-less sudo
-RUN echo 'ALL ALL=(ALL) NOPASSWD: ALL' >/etc/sudoers.d/99_no_password && \
-# Ensure container env is kept under sudo
-    echo 'Defaults env_keep += "container"' >/etc/sudoers.d/99_env && \
-    chmod 440 /etc/sudoers.d/*
+COPY image/. /
 
-COPY entrypoint.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh && \
+    chmod 0440 /etc/sudoers.d/*
 
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
