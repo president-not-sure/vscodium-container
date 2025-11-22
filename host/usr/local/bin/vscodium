@@ -4,7 +4,7 @@ podman run \
     --rm \
     --interactive \
     --tty \
-    --user $USER \
+    --user $UID:$UID \
     --hostuser $UID \
     --userns keep-id \
     --group-add keep-groups \
