@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Exit script on error
-set -e
+set -eo pipefail
 
 # Source profile and by extension /etc/profile.d/*
 . /etc/profile
