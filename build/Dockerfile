@@ -27,6 +27,14 @@ RUN dnf -y update && \
     rm -rf /var/cache/dnf && \
     localedef -i en_US -f UTF-8 en_US.UTF-8
 
+# # Install your custom packages here to take advantage of the cached layers
+# RUN dnf -y update && \
+#     dnf -y install \
+#         my-custom-package-1 \
+#         my-custom-package-2 && \
+#     dnf -y clean all && \
+#     rm -rf /var/cache/dnf && \
+
 # Copy everything else
 COPY image/. /
 
