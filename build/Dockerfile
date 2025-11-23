@@ -27,6 +27,7 @@ RUN dnf -y update && \
 # Enable host command execution
         host-spawn \
 # CLI QoL
+        procps-ng \
         bash-completion bash-color-prompt \
         man man-pages man-db \
         glibc-locale-source && \
