@@ -6,8 +6,12 @@ COPY image/etc/dnf/dnf.conf /etc/dnf/dnf.conf
 
 # Install VSCodium and other dependencies
 RUN dnf -y update && \
-# Reinstall all packages to recover missing man pages
-    dnf -y reinstall $(dnf repoquery --installed --qf " %{name} ") && \
+# Reinstall all packages that should contain man pages to install the missing man pages
+    rpm -qa --qf '%{NAME}\n' | while read pkg; do \
+        if rpm -ql "$pkg" | grep -qP '/usr/share/man.*\.gz'; then \
+            echo "$pkg"; \
+        fi \
+    done | sort -u | xargs -r dnf -y reinstall && \
     dnf -y install \
         codium \
         git git-lfs \
