@@ -19,8 +19,6 @@ RUN sed -i '/tsflags=nodocs/d' /etc/dnf/dnf.conf
 RUN dnf -y update && \
 # Reinstall all packages to recover missing man pages
     dnf -y reinstall $(dnf repoquery --installed --qf " %{name} ") && \
-    dnf -y group install \
-        container-management && \
     dnf -y install \
         codium \
         git git-lfs \
