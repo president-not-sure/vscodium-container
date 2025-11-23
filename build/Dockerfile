@@ -12,6 +12,7 @@ RUN dnf -y update && \
             echo "$pkg"; \
         fi \
     done | sort -u | xargs -r dnf -y reinstall && \
+# Install VSCodium
     dnf -y install \
         codium \
         git git-lfs \
@@ -26,9 +27,12 @@ RUN dnf -y update && \
     rm -rf /var/cache/dnf && \
     localedef -i en_US -f UTF-8 en_US.UTF-8
 
+# Copy everything else
 COPY image/. /
 
+# Set file permissions
 RUN chmod +x /usr/local/bin/entrypoint.sh && \
     chmod 0440 /etc/sudoers.d/*
 
+# Wrapper script for VSCodium as the entrypoint
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
