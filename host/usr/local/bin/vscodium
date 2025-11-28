@@ -45,10 +45,8 @@ declare -a podman_run_default_args=(
 )
 # Podman run command custom args
 declare -a podman_run_custom_args=(
-    # Start container in host home
-    --workdir="${HOME}"
-)
 
+)
 
 # Container image to run
 # TAG can be provided via environment variable, defaults to 'latest'
