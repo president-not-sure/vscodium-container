@@ -49,9 +49,7 @@ declare -a podman_run_custom_args=(
 )
 
 # Container image to run
-# TAG can be provided via environment variable, defaults to 'latest'
-# (i.e., TAG=project vscodium)
-declare image="localhost/vscodium:${TAG:-latest}"
+declare image="localhost/vscodium:latest"
 
 # VSCodium-specific default arguments
 declare -a vscodium_default_args=(
