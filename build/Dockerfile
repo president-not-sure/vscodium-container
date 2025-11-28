@@ -20,6 +20,7 @@ RUN dnf -y update && \
         host-spawn \
 # CLI QoL
         procps-ng \
+        tree \
         bash-completion bash-color-prompt \
         man man-pages man-db \
         glibc-locale-source && \
