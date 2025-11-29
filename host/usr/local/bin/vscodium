@@ -78,15 +78,15 @@ declare -a cmd
 ################################################################################
 
 # Share environment and host resources
-share-host-env
-share-host-home-rw
+share-gui-env
+share-home-rw
 share-app-home
 share-gitconfig
 share-ssh
 share-system-dbus-socket
 share-session-dbus-socket
 share-wayland-socket
-share-x11
+share-x11-socket
 share-gpu
 
 # Command assembly

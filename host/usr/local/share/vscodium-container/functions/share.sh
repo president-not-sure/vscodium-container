@@ -24,8 +24,8 @@ declare xdg_runtime_dir
 # Share functions
 ################################################################################
 
-# share-host-env: Share detected GUI environment variables
-share-host-env() {
+# share-gui-env: Share detected GUI environment variables
+share-gui-env() {
     local var
     local val
 
@@ -64,8 +64,8 @@ share-app-home(){
     fi
 }
 
-# share-host-home: Mount host HOME directory
-share-host-home() {
+# share-home: Mount host HOME directory
+share-home() {
     local opt="${1}"
     local home
 
@@ -79,10 +79,10 @@ share-host-home() {
     fi
 }
 
-# share-host-home-ro: Mount host HOME directory read-only
-share-host-home-ro(){ share-host-home ro; }
-# share-host-home-rw: Mount host HOME directory read-write
-share-host-home-rw(){ share-host-home rw; }
+# share-home-ro: Mount host HOME directory read-only
+share-home-ro(){ share-home ro; }
+# share-home-rw: Mount host HOME directory read-write
+share-home-rw(){ share-home rw; }
 
 # share-gitconfig: Mount .gitconfig if it exists
 share-gitconfig() {
@@ -169,8 +169,8 @@ share-wayland-socket() {
     fi
 }
 
-# share-x11: Share X11 display socket and Xauthority if they exist
-share-x11() {
+# share-x11-socket: Mount X11 socket and share Xauthority if they exist
+share-x11-socket() {
     local xauthority
     local xauthority_basename
     share-xdg-runtime-dir
