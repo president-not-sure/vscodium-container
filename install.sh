@@ -1,7 +1,6 @@
 #!/bin/sh
 
-# Exit immediately if a command fails, treat unset variables as errors, and
-# propagate errors through pipes
+# Exit on command failures, unset variables, and propagate errors through pipes
 set -eou pipefail
 
 # Validate desktop file

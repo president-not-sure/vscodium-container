@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Exit script on error
+# Exit on command failures and propagate errors through pipes
 set -eo pipefail
 
 # Source profile and by extension /etc/profile.d/*
