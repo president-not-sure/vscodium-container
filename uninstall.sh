@@ -1,5 +1,9 @@
 #!/bin/sh
 
+# Exit immediately if a command fails, treat unset variables as errors, and
+# propagate errors through pipes
+set -eou pipefail
+
 rm -rfv \
     ~/.local/bin/vscodium \
     ~/.local/share/applications/vscodium.desktop \

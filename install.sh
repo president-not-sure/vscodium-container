@@ -1,6 +1,8 @@
 #!/bin/sh
 
-set -e
+# Exit immediately if a command fails, treat unset variables as errors, and
+# propagate errors through pipes
+set -eou pipefail
 
 # Validate desktop file
 desktop-file-validate host/usr/local/share/applications/vscodium.desktop
