@@ -44,6 +44,9 @@ declare -a podman_run_default_args=(
     --tty
     # Run as current host user
     --user="$(id -u):$(id -g)"
+    # Share the host user who started the container with the container
+    --env=HOST_USER_UID="$(id -u)"
+    --env=HOST_USER_GID="$(id -g)"
     # Keep user namespace ID
     --userns=keep-id
     # Keep supplementary groups
