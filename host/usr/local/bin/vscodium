@@ -78,7 +78,6 @@ declare -a cmd
 # Execution
 ################################################################################
 
-
 # Share environment and host resources
 share-host-env
 share-host-home-rw
