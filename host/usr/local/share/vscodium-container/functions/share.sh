@@ -14,17 +14,17 @@ script_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd )
 # Source helper.sh
 . "${script_dir}/helper.sh"
 
-# Flag to detect if share_xdg_runtime ran (do not modify)
+# Flag to detect if share_xdg_runtime ran
 declare -i share_xdg_runtime_ran=0
 
-# XDG_RUNTIME_DIR (do not modify)
+# XDG_RUNTIME_DIR
 declare xdg_runtime_dir
 
 ################################################################################
 # Share functions
 ################################################################################
 
-# share-host-env: Pass essential host environment variables into container
+# share-host-env: Share detected GUI environment variables
 share-host-env() {
     local var
     local val
@@ -40,7 +40,7 @@ share-host-env() {
         XDG_SESSION_DESKTOP \
         XDG_SESSION_TYPE; do
 
-        # Prefer shell environment first, fallback to systemd session
+        # Prefer process environment first and fallback to systemd session
         if val="$(pval "$var")"; then
             podman_run_default_args+=(--env="${var}=${val}")
         elif val="$(psval "$var")"; then
@@ -49,7 +49,7 @@ share-host-env() {
     done
 }
 
-# share-app-home: Share app home directory
+# share-app-home: Share and mount the app HOME directory if it exists
 share-app-home(){
     # shellcheck disable=SC2154
     mkdir -p "$app_persistent_home"
@@ -64,7 +64,7 @@ share-app-home(){
     fi
 }
 
-# share-host-home: Share host home directory
+# share-host-home: Mount host HOME directory
 share-host-home() {
     local opt="${1}"
     local home
@@ -79,12 +79,12 @@ share-host-home() {
     fi
 }
 
-# share-host-home-ro: Share host home directory
+# share-host-home-ro: Mount host HOME directory read-only
 share-host-home-ro(){ share-host-home ro; }
-# share-host-home-rw: Share host home directory
+# share-host-home-rw: Mount host HOME directory read-write
 share-host-home-rw(){ share-host-home rw; }
 
-# share-gitconfig: Share .gitconfig if present on host
+# share-gitconfig: Mount .gitconfig if it exists
 share-gitconfig() {
     if test -e "${HOME}/.gitconfig"; then
         podman_run_default_args+=(
@@ -95,7 +95,7 @@ share-gitconfig() {
     fi
 }
 
-# share-ssh: Share .ssh directory if present on host
+# share-ssh: Mount .ssh directory if it exists
 share-ssh() {
     if test -e "${HOME}/.ssh"; then
         podman_run_default_args+=(
@@ -106,7 +106,7 @@ share-ssh() {
     fi
 }
 
-# Share system dbus socket
+# share-system-dbus-socket: Mount system dbus socket if it exists
 share-system-dbus-socket() {
     if test -S /run/dbus/system_bus_socket; then
         podman_run_default_args+=(
@@ -118,7 +118,7 @@ share-system-dbus-socket() {
 }
 
 
-# share-xdg-runtime-dir: Mount XDG_RUNTIME_DIR for sockets
+# share-xdg-runtime-dir: Share and mount XDG_RUNTIME_DIR if it exists
 share-xdg-runtime-dir() {
     if ! xdg_runtime_dir="$(pval XDG_RUNTIME_DIR)"; then
         echo "Error: XDG_RUNTIME_DIR is empty or not set" >&2
@@ -139,7 +139,7 @@ share-xdg-runtime-dir() {
     fi
 }
 
-# share-session-dbus-socket: Share session DBus socket if not SSH
+# share-session-dbus-socket: Share session dbus socket if it exists and no SSH
 share-session-dbus-socket() {
     share-xdg-runtime-dir
 
@@ -154,7 +154,7 @@ share-session-dbus-socket() {
     fi
 }
 
-# share-wayland-socket: Share Wayland socket for GUI
+# share-wayland-socket: Share Wayland socket if it exists
 share-wayland-socket() {
     local wayland_display
     share-xdg-runtime-dir
@@ -169,7 +169,7 @@ share-wayland-socket() {
     fi
 }
 
-# share-x11: Share X11 display and Xauthority for GUI
+# share-x11: Share X11 display socket and Xauthority if they exist
 share-x11() {
     local xauthority
     local xauthority_basename
@@ -184,7 +184,6 @@ share-x11() {
         echo "Warning: XAUTHORITY is empty or not set" >&2
     fi
 
-    # X11 Unix socket
     if test -d /tmp/.X11-unix; then
         podman_run_default_args+=(--volume=/tmp/.X11-unix:/tmp/.X11-unix:rw)
     else
