@@ -8,9 +8,16 @@ set -eou pipefail
 # Variable declaration and initialization
 ################################################################################
 
+# Define an app name (currently set obtained from the script name)
+declare app
+app="$(basename "$0")"
+
+# Container image to run
+declare image="localhost/vscodium:latest"
+
 # Container home directory (mounted inside container)
 # Kept in the host's home for easy access
-declare container_home="${HOME}/.var/podman/vscodium"
+declare app_persistent_home="${HOME}/.var/podman/${app}"
 
 # Arrays to hold environment variables and Podman arguments
 # Holds environment variables from the current user session
@@ -48,16 +55,13 @@ declare -a podman_run_custom_args=(
 
 )
 
-# Container image to run
-declare image="localhost/vscodium:latest"
-
-# VSCodium-specific default arguments
-declare -a vscodium_default_args=(
+# Application-specific default arguments
+declare -a app_default_args=(
     # Force VSCodium to use Wayland
     --ozone-platform=wayland
 )
-# VSCodium-specific custom arguments
-declare -a vscodium_custom_args=(
+# Application-specific custom arguments
+declare -a app_custom_args=(
     # Add any project-specific VSCodium args here
 )
 
@@ -313,7 +317,7 @@ share-gpu() {
 # Share environment and host resources
 share-host-env
 share-host-home-rw
-share-container-home
+share-app-home
 share-gitconfig
 share-ssh
 share-system-dbus-socket
@@ -331,8 +335,8 @@ cmd=(
     "${podman_run_default_args[@]}"
     "${podman_run_custom_args[@]}"
     "$image"
-    "${vscodium_default_args[@]}"
-    "${vscodium_custom_args[@]}"
+    "${app_default_args[@]}"
+    "${app_custom_args[@]}"
     # Pass any additional CLI arguments to container
     "$@"
 )
