@@ -4,6 +4,7 @@
 set -eo pipefail
 
 # Source profile and by extension /etc/profile.d/*
+# shellcheck disable=SC1091
 . /etc/profile
 
 # Start VSCodium and pass the entrypoint's arguments to it
