@@ -13,7 +13,7 @@ install -vD -m 0644 -t ~/.local/share/icons/hicolor/64x64@2/apps host/usr/local/
 install -vD -m 0644 -t ~/.local/share/icons/hicolor/128x128/apps host/usr/local/share/icons/hicolor/128x128/apps/vscodium.png
 install -vD -m 0644 -t ~/.local/share/icons/hicolor/128x128@2/apps host/usr/local/share/icons/hicolor/128x128@2/apps/vscodium.png
 install -vD -m 0644 -t ~/.local/share/icons/hicolor/scalable/apps host/usr/local/share/icons/hicolor/scalable/apps/vscodium.svg
-# force update
+# Force icon update
 touch ~/.local/share/icons/hicolor
 
 # Install launch script
