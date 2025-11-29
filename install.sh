@@ -20,3 +20,6 @@ install -vD -m 0755 -t ~/.local/bin host/usr/local/bin/vscodium
 
 # Install desktop file
 desktop-file-install --dir ~/.local/share/applications host/usr/local/share/applications/vscodium.desktop
+
+# Install function script
+install -vD -m 0644 -t ~/.local/share/vscodium-container/functions host/usr/local/share/vscodium-container/functions/*
