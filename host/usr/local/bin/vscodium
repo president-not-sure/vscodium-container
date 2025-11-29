@@ -8,6 +8,13 @@ set -eou pipefail
 # Variable declaration, initialization, and script sourcing
 ################################################################################
 
+# Absolute path of the script
+declare script_dir
+# shellcheck source=../share/vscodium-container/functions/share.sh
+script_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd )
+# Source share.sh
+. "${script_dir}/../share/vscodium-container/functions/share.sh"
+
 # Define an app name (currently set obtained from the script name)
 declare app
 app="$(basename "$0")"
