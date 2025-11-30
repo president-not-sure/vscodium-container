@@ -41,8 +41,8 @@ declare -a podman_run_default_args=(
     --interactive
     # Allocate a pseudo-TTY
     --tty
-    # Run as current host user
-    --user="$(id -u):$(id -g)"
+    # Run as root inside the container
+    --user=0:0
     # Share the host user who started the container with the container
     --env=HOST_USER_UID="$(id -u)"
     --env=HOST_USER_GID="$(id -g)"
@@ -54,6 +54,17 @@ declare -a podman_run_default_args=(
     --security-opt=label=disable
     # Remove /dev/shm size limit
     --shm-size=0
+    # Set systemd stop signal
+    --stop-signal="SIGRTMIN+3"
+    # Mount systemd tmpfs
+    --tmpfs=/run
+    --tmpfs=/tmp
+    --tmpfs=/run/lock
+    --tmpfs=/var/lib/journal
+    # Make sure systemd only see its private cgroup
+    --cgroupns=private
+    # Unmask cgroup since it is private
+    --security-opt=unmask=/sys/fs/cgroup
 )
 # Podman run command custom args
 declare -a podman_run_custom_args=(
@@ -83,14 +94,17 @@ share-home-rw
 share-app-home
 share-gitconfig
 share-ssh
-share-system-dbus-socket
-share-session-dbus-socket
+# # systemd sockets needs its private sockets
+# share-system-dbus-socket
+# share-session-dbus-socket
 share-wayland-socket
 share-x11-socket
 share-gpu
 
 # Command assembly
 cmd=(
+    # systemd require management of its own cgroup
+    systemd-run -p Delegate=yes --user --scope
     podman
     "${podman_global_default_args[@]}"
     "${podman_global_custom_args[@]}"
